@@ -25,19 +25,74 @@ class NavbarCom extends Component {
               <Nav className="me-auto">
                 {/* <Nav.Link as={Link} to="/dangki">Đăng kí</Nav.Link>
                 <Nav.Link as={Link} to="/todo">ToDo</Nav.Link> */}
+{/*                 
                 <Nav.Link as={Link} to="/NhanLichChuyenBay">Nhận lịch chuyến bay</Nav.Link>
                 <Nav.Link as={Link} to="/BanVe">Bán vé</Nav.Link>      
                 <Nav.Link as={Link} to="/GhiNhanDatVe">Ghi nhận đặt vé</Nav.Link>    
                 <Nav.Link as={Link} to="/TraCuuChuyenBay">Tra cứu chuyến bay</Nav.Link>
                 <Nav.Link as={Link} to="/LapBaoCao">Lập báo cáo</Nav.Link>
 
-                <Nav.Link as={Link} to="/ThayDoiQuyDinh">Thay đổi quy định</Nav.Link>  
+                <Nav.Link as={Link} to="/ThayDoiQuyDinh">Thay đổi quy định</Nav.Link>   */}
 
                 {/* <Nav.Link as={Link} to="/">Exercises List</Nav.Link>
                 <Nav.Link as={Link} to="/edit/:id">Edit Exercise</Nav.Link>
                 <Nav.Link as={Link} to="/create">Create Exercise</Nav.Link>
                 <Nav.Link as={Link} to="/user">Create User</Nav.Link> */}
 
+                <NavDropdown title="Chuyến bay" id="basic-nav-dropdown">
+                <NavDropdown.Item 
+                //href="#action/3.1"
+                as={Link} to="/ChuyenBay/TaoChuyenBay"
+                >Tạo chuyến bay</NavDropdown.Item>
+                <NavDropdown.Item 
+                //href="#action/3.2"
+                as={Link} to="/ChuyenBay/DanhSachChuyenBay"
+                >Danh sách chuyến bay</NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Vé" id="basic-nav-dropdown">
+                <NavDropdown.Item 
+                //href="#action/3.1"
+                as={Link} to="/Ve/BanVe"
+                >Bán vé</NavDropdown.Item>
+                <NavDropdown.Item 
+                //href="#action/3.2"
+                as={Link} to="/Ve/DatVe"
+                >Đặt vé</NavDropdown.Item>
+                <NavDropdown.Item 
+                //href="#action/3.2"
+                as={Link} to="/Ve/DanhSachVe"
+                >Danh sách vé</NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Báo cáo" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Lập báo cáo tháng</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">Lập báo cáo năm</NavDropdown.Item>     
+                </NavDropdown>
+
+                <NavDropdown title="Sân bay" id="basic-nav-dropdown">
+                <NavDropdown.Item 
+                  // href="#action/3.1"
+                  as={Link} to="/SanBay/TaoSanBay"
+                  >Tạo sân bay</NavDropdown.Item>
+                <NavDropdown.Item 
+                  // href="#action/3.2"
+                  as={Link} to="/SanBay/DanhSachSanBay"
+                  >Danh sách sân bay</NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Hạng ghế" id="basic-nav-dropdown">
+                <NavDropdown.Item 
+                // href="#action/3.1"
+                as={Link} to="/HangGhe/TaoHangGhe"
+                >Tạo hạng ghế</NavDropdown.Item>
+                <NavDropdown.Item 
+                // href="#action/3.2"
+                as={Link} to="/HangGhe/DanhSachHangGhe"
+                >Danh sách hạng ghế</NavDropdown.Item>
+                </NavDropdown>
+
+                <Nav.Link as={Link} to="/ThayDoiQuyDinh">Thay đổi quy định</Nav.Link>  
                 {/* <NavDropdown title="Thay đổi quy định" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Sân bay</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Loại ghế</NavDropdown.Item>

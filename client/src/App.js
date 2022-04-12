@@ -17,19 +17,29 @@ import CreateExercise from "./components/create-exercise.component";
 import CreateUser from "./components/create-user.component";
 
 import TrangLamViec from './components/TrangLamViec/TrangLamViec'
-import NhanLichChuyenBay from './components/NhanLichChuyenBay/NhanLichChyenBay'
-import BanVe from './components/BanVe/BanVe'
-import GhiNhanDatVe from './components/GhiNhanDatVe/GhiNhanDatVe'
-import TraCuuChuyenBay from './components/TraCuuChuyenBay/TraCuuChuyenBay'
-import  LapBaoCao from './components/LapBaoCao/LapBaoCao'
 import  ThayDoiQuyDinh from './components/ThayDoiQuyDinh/ThayDoiQuyDinh'
-// import testBootstrap from './components/testBootstrap'
 
 import { useParams } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dangnhap from './components/Dangnhap/Dangnhap';
-
+// Sân bay
+import SuaSanBay from './components/SanBay/SuaSanBay';
+import TaoSanBay from './components/SanBay/TaoSanBay';
+import DanhSachSanBay from './components/SanBay/DanhSachSanBay';
+// Vé
+import BanVe from './components/Ve/BanVe';
+import DanhSachVe from './components/Ve/DanhSachVe';
+import DatVe from './components/Ve/DatVe';
+import SuaVe from './components/Ve/SuaVe';
+// Hạng ghế
+import DanhSachHangGhe from './components/HangGhe/DanhSachHangGhe'
+import SuaHangGhe from './components/HangGhe/SuaHangGhe'
+import TaoHangGhe from './components/HangGhe/TaoHangGhe'
+// Chuyen bay
+import SuaChuyenBay from './components/ChuyenBay/SuaChuyenBay';
+import TaoChuyenBay from './components/ChuyenBay/TaoChuyenBay';
+import DanhSachChuyenBay from './components/ChuyenBay/DanhSachChuyenBay';
 const App = () => {
   const Wrapper = (props) => {
     const params = useParams();
@@ -46,14 +56,29 @@ const App = () => {
                     <Route exact path="/"  element={<Dangnhap/>} />
                     {/* <Route exact path="/taikhoans" element={<DangKi/>} />
                     <Route exact path="/todos"  element={<Todo/>} /> */}
+
                     <Route exact path="/dangki"   element={<DangKi/>} />
                     <Route exact path="/todo"   element={<Todo/>} />
                     <Route exact path="/TrangLamViec"  element={<TrangLamViec/>} />
-                    <Route exact path="/NhanLichChuyenBay" element={<NhanLichChuyenBay/>} />
-                    <Route exact path="/BanVe"  element={<BanVe/>} />
-                    <Route exact path="/GhiNhanDatVe"  element={<GhiNhanDatVe/>} />
-                    <Route exact path="/TraCuuChuyenBay"  element={<TraCuuChuyenBay/>} />
-                    <Route exact path="/LapBaoCao"  element={<LapBaoCao/>} />
+
+                    {/* Chuyen Bay */}
+                    <Route exact path="/ChuyenBay/TaoChuyenBay"  element={<TaoChuyenBay/>} />
+                    <Route exact path="/ChuyenBay/DanhSachChuyenBay"  element={<DanhSachChuyenBay/>} />
+                    <Route exact path="/ChuyenBay/SuaChuyenBay/:id"  element={<SuaChuyenBay/>} />
+                    {/* Vé */}
+                    <Route exact path="/Ve/BanVe"  element={<BanVe/>} />
+                    <Route exact path="/Ve/DanhSachVe"  element={<DanhSachVe/>} />
+                    <Route exact path="/Ve/SuaVe/:id"  element={<SuaVe/>} />
+                    <Route exact path="/Ve/DatVe"  element={<DatVe/>} />
+                    {/* Sân bay */}
+                    <Route exact path="/SanBay/TaoSanBay"  element={<TaoSanBay/>} />
+                    <Route exact path="/SanBay/DanhSachSanBay"  element={<DanhSachSanBay/>} />
+                    <Route exact path="/SanBay/SuaSanBay/:id"  element={<SuaSanBay/>} />
+                    {/* Hạng ghế */}
+                    <Route exact path="/HangGhe/TaoHangGhe"  element={<TaoHangGhe/>} />
+                    <Route exact path="/HangGhe/DanhSachHangGhe"  element={<DanhSachHangGhe/>} />
+                    <Route exact path="/HangGhe/SuaHangGhe/:id"  element={<SuaHangGhe/>} />
+                    {/* Quy định */}
                     <Route exact path="/ThayDoiQuyDinh"  element={<ThayDoiQuyDinh/>} />
 
                     {/* <Route exact path="/" element={<ExercisesList/>} />
