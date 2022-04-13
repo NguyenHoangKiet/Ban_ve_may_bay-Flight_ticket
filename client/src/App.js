@@ -46,6 +46,16 @@ const App = () => {
     return <EditExercise  {...{...props, match: {params}} } />
   }
 
+  const Wrapper_SuaHangGhe = (props) => {
+    const params = useParams();
+    return <SuaHangGhe  {...{...props, match: {params}} } />
+  }
+
+  const Wrapper_SuaSanBay = (props) => {
+    const params = useParams();
+    return <SuaSanBay  {...{...props, match: {params}} } />
+  }
+  
   return (
       <div>
        
@@ -73,11 +83,11 @@ const App = () => {
                     {/* Sân bay */}
                     <Route exact path="/SanBay/TaoSanBay"  element={<TaoSanBay/>} />
                     <Route exact path="/SanBay/DanhSachSanBay"  element={<DanhSachSanBay/>} />
-                    <Route exact path="/SanBay/SuaSanBay/:id"  element={<SuaSanBay/>} />
+                    <Route exact path="/SanBay/SuaSanBay/:id"  element={<Wrapper_SuaSanBay/>} />
                     {/* Hạng ghế */}
-                    <Route exact path="/HangGhe/TaoHangGhe"  element={<TaoHangGhe/>} />
+                    <Route exact path="/HangGhe/TaoHangGhe"     element={<TaoHangGhe/>} />
                     <Route exact path="/HangGhe/DanhSachHangGhe"  element={<DanhSachHangGhe/>} />
-                    <Route exact path="/HangGhe/SuaHangGhe/:id"  element={<SuaHangGhe/>} />
+                    <Route exact path="/HangGhe/SuaHangGhe/:id"  element={<Wrapper_SuaHangGhe/>} />
                     {/* Quy định */}
                     <Route exact path="/ThayDoiQuyDinh"  element={<ThayDoiQuyDinh/>} />
 

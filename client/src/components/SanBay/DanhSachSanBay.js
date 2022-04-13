@@ -3,20 +3,18 @@ import { Link} from 'react-router-dom';
 import axios from 'axios';
 import NavbarCom from '../navbar.component';
 
-const Exercise = props => (
+const Sanbay = props => (
   <tr>
-    <td>{props.exercise.username}</td>
-    <td>{props.exercise.discription}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0,10)}</td>
+    <td>{props.sanbay.TenSanBay}</td>
+    <td>{props.sanbay.QuocGia}</td>
     <td>
-      <Link to={"/edit/"+props.exercise._id}>
+      <Link to={"/SanBay/SuaSanBay/"+props.sanbay._id}>
       {/* <Link to={"/edit/"}> */}
-        edit
+        Sửa
       </Link> 
       | 
-      <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>
-        delete
+      <a href="#" onClick={() => { props.deletesanbay(props.sanbay._id) }}>
+        Xóa
       </a>
     </td>
   </tr>
@@ -26,33 +24,33 @@ export default class DanhSachSanBay extends Component {
   constructor(props) {
     super(props);
 
-    this.deleteExercise = this.deleteExercise.bind(this)
+    this.deletesanbay = this.deletesanbay.bind(this)
 
-    this.state = {exercises: []};
+    this.state = {sanbays: []};
   }
 
   componentDidMount() {
-    axios.get('/exercises/')
+    axios.get('/sanbays/')
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ sanbays: response.data })
       })
       .catch((error) => {
         console.log(error);
       })
   }
 
-  deleteExercise(id) {
-    axios.delete('/exercises/delete/'+id)
+  deletesanbay(id) {
+    axios.delete('/sanbays/delete/'+id)
       .then(response => { console.log(response.data)});
 
     this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
+      sanbays: this.state.sanbays.filter(el => el._id !== id)
     })
   }
 
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+  sanbayList() {
+    return this.state.sanbays.map(currentsanbay => {
+      return <Sanbay sanbay={currentsanbay} deletesanbay={this.deletesanbay} key={currentsanbay._id}/>;
     })
   }
 
@@ -64,15 +62,12 @@ export default class DanhSachSanBay extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Username</th>
-              <th>Description</th>
-              <th>Duration</th>
-              <th>Date</th>
-              <th>Actions</th>
+              <th>Tên sân bay</th>
+              <th>Quốc gia</th>
             </tr>
           </thead>
           <tbody>
-            { this.exerciseList() }
+            { this.sanbayList() }
           </tbody>
         </table>
       </div>

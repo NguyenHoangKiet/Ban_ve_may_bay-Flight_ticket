@@ -10,99 +10,58 @@ export default class SuaHangGhe extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDuration = this.onChangeDuration.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeTenHangGhe = this.onChangeTenHangGhe.bind(this);
+    this.onChangePhiThem = this.onChangePhiThem.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
-      description: '',
-      duration: 0,
-      date: new Date(),
-      users: []
+      TenHangGhe: '',
+      PhiThem : 100,
     }
     
   }
 
   componentDidMount() {
-    // console.log(this.props.match.params.id)
-    // const task = {
-    //      id : this.props.match.params.id
-    //     // id : this.props.params
-    //   //id : '62529fb105ee230d4b056ab1'
-    //   // username : 'kiet'
-    // }
-    // // console.log(task);
-    axios.get('/exercises/find/'+this.props.match.params.id)
+    axios.get('/hangghes/find/'+this.props.match.params.id)
     // axios.post('/exercises/find',task)
       .then(response => {
         this.setState({
-          username: response.data.username,
-          description: response.data.discription,
-          duration: response.data.duration,
-          date: new Date(response.data.date)
+          TenHangGhe : response.data.TenHangGhe,
+          PhiThem : response.data.PhiThem
         })   
       })
       .catch(function (error) {
         console.log(error);
       })
 
-    axios.get('/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user.username),
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-
   }
 
-  onChangeUsername(e) {
+  onChangeTenHangGhe(e) {
     this.setState({
-      username: e.target.value
+      TenHangGhe: e.target.value
     })
   }
 
-  onChangeDescription(e) {
+  onChangePhiThem(e) {
     this.setState({
-      description: e.target.value
-    })
-  }
-
-  onChangeDuration(e) {
-    this.setState({
-      duration: e.target.value
-    })
-  }
-
-  onChangeDate(date) {
-    this.setState({
-      date: date
+      PhiThem: e.target.value
     })
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const exercise = {
-      username: this.state.username,
-      description: this.state.description,
-      duration: this.state.duration,
-      date: this.state.date
+    const hangghe = {
+      TenHangGhe : this.state.TenHangGhe,
+      PhiThem : this.state.PhiThem
     }
 
-    console.log(exercise);
+    console.log(hangghe);
 
-    axios.post('/exercises/update/' + this.props.match.params.id, exercise)
+    axios.post('/hangghes/update/' + this.props.match.params.id, hangghe)
       .then(res => console.log(res.data));
 
-    window.location = '/';
+    window.location = '/HangGhe/DanhSachHangGhe';
   }
 
   render() {
@@ -113,52 +72,26 @@ export default class SuaHangGhe extends Component {
       <h3>Sửa hạng ghế</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
-          <label>Username: </label>
-          <select ref="userInput"
-              required
-              className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
-              {
-                this.state.users.map(function(user) {
-                  return <option 
-                    key={user}
-                    value={user}>{user}
-                    </option>;
-                })
-              }
-          </select>
-        </div>
-        <div className="form-group"> 
-          <label>Description: </label>
+          <label>Tên hạng ghế </label>
           <input  type="text"
               required
               className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
+              value={this.state.TenHangGhe}
+              onChange={this.onChangeTenHangGhe}
               />
         </div>
         <div className="form-group">
-          <label>Duration (in minutes): </label>
+          <label>Phí thêm : </label>
           <input 
               type="text" 
               className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
+              value={this.state.PhiThem}
+              onChange={this.onChangePhiThem}
               />
-        </div>
-        <div className="form-group">
-          <label>Date: </label>
-          <div>
-            <DatePicker
-              selected={this.state.date}
-              onChange={this.onChangeDate}
-            />
-          </div>
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Sửa" className="btn btn-primary" />
         </div>
       </form>
     </div>

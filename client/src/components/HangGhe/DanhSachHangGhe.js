@@ -3,20 +3,18 @@ import { Link} from 'react-router-dom';
 import axios from 'axios';
 import NavbarCom from '../navbar.component';
 
-const Exercise = props => (
+const Hangghe = props => (
   <tr>
-    <td>{props.exercise.username}</td>
-    <td>{props.exercise.discription}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0,10)}</td>
+    <td>{props.hangghe.TenHangGhe}</td>
+    <td>{props.hangghe.PhiThem}</td>
     <td>
-      <Link to={"/edit/"+props.exercise._id}>
+      <Link to={"/HangGhe/SuaHangGhe/"+props.hangghe._id}>
       {/* <Link to={"/edit/"}> */}
-        edit
+        Sửa
       </Link> 
       | 
-      <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>
-        delete
+      <a href="#" onClick={() => { props.deletehangghe(props.hangghe._id) }}>
+        Xóa
       </a>
     </td>
   </tr>
@@ -26,33 +24,34 @@ export default class DanhSachHangGhe extends Component {
   constructor(props) {
     super(props);
 
-    this.deleteExercise = this.deleteExercise.bind(this)
+    this.deletehangghe = this.deletehangghe.bind(this)
 
-    this.state = {exercises: []};
+    this.state = {hangghes: []};
   }
 
   componentDidMount() {
-    axios.get('/exercises/')
+    axios.get('/hangghes/')
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ hangghes: response.data })
       })
       .catch((error) => {
         console.log(error);
       })
   }
 
-  deleteExercise(id) {
-    axios.delete('/exercises/delete/'+id)
+  deletehangghe(id) {
+    axios.delete('/hangghes/delete/'+id)
       .then(response => { console.log(response.data)});
 
     this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
+      hangghes: this.state.hangghes.filter(el => el._id !== id)
     })
   }
 
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+  hanggheList() {
+    console.log(this.state.hangghes)
+    return this.state.hangghes.map(currenthangghe => {
+      return <Hangghe hangghe={currenthangghe} deletehangghe={this.deletehangghe} key={currenthangghe._id}/>;
     })
   }
 
@@ -64,15 +63,12 @@ export default class DanhSachHangGhe extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Username</th>
-              <th>Description</th>
-              <th>Duration</th>
-              <th>Date</th>
-              <th>Actions</th>
+              <th>Tên hạng ghế</th>
+              <th>Phí thêm</th>
             </tr>
           </thead>
           <tbody>
-            { this.exerciseList() }
+            { this.hanggheList() }
           </tbody>
         </table>
       </div>

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/api');
 require('dotenv').config();
+const path = require('path')
 
 const app = express();
 
@@ -29,9 +30,21 @@ app.use('/api',routes);
 
 const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
+const hangghesRouter = require('./routes/hangghes');
+const sanbaysRouter = require('./routes/sanbays');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
+app.use('/hangghes',hangghesRouter);
+app.use('/sanbays',sanbaysRouter);
+
+if (process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'));
+  app.get('*', ( res,req) => {
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+
+  })
+}
 
 app.use((err, req, res, next) => {
   console.log(err);

@@ -8,132 +8,73 @@ export default class TaoSanBay extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDuration = this.onChangeDuration.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeTenSanBay = this.onChangeTenSanBay.bind(this);
+    this.onChangeQuocGia = this.onChangeQuocGia.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
-      description: '',
-      duration: 0,
-      date: new Date(),
-      users: []
+      TenSanBay: '',
+      QuocGia : '',
     }
+    
   }
 
-  componentDidMount() {
-    axios.get('/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user.username),
-            username: response.data[0].username
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-
-  }
-
-  onChangeUsername(e) {
+  onChangeTenSanBay(e) {
     this.setState({
-      username: e.target.value
+      TenSanBay: e.target.value
     })
   }
 
-  onChangeDescription(e) {
+  onChangeQuocGia(e) {
     this.setState({
-      description: e.target.value
-    })
-  }
-
-  onChangeDuration(e) {
-    this.setState({
-      duration: e.target.value
-    })
-  }
-
-  onChangeDate(date) {
-    this.setState({
-      date: date
+      QuocGia: e.target.value
     })
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const exercise = {
-      username: this.state.username,
-      description: this.state.description,
-      duration: this.state.duration,
-      date: this.state.date
+    const sanbay = {
+      TenSanBay : this.state.TenSanBay,
+      QuocGia : this.state.QuocGia
     }
 
-    //console.log(exercise);
-  
-    axios.post('/exercises/add', exercise)
+    console.log(sanbay);
+
+    axios.post('/sanbays/add', sanbay)
       .then(res => console.log(res.data));
 
-    // window.location = '/';
+    window.location = '/SanBay/DanhSachSanBay';
   }
 
   render() {
+    // console.log(this.props.match.params)
     return (
-      <div className='container'>
+    <div className='container'>
       <NavbarCom></NavbarCom>
       <h3>Tạo sân bay</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
-          <label>Username: </label>
-          <select ref="userInput"
-              required
-              className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
-              {
-                this.state.users.map(function(user) {
-                  return <option 
-                    key={user}
-                    value={user}>{user}
-                    </option>;
-                })
-              }
-          </select>
-        </div>
-        <div className="form-group"> 
-          <label>Description: </label>
+          <label>Tên sân bay </label>
           <input  type="text"
               required
               className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
+              value={this.state.TenSanBay}
+              onChange={this.onChangeTenSanBay}
               />
         </div>
         <div className="form-group">
-          <label>Duration (in minutes): </label>
+          <label>Quốc gia : </label>
           <input 
               type="text" 
               className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
+              value={this.state.QuocGia}
+              onChange={this.onChangeQuocGia}
               />
-        </div>
-        <div className="form-group">
-          <label>Date: </label>
-          <div>
-            <DatePicker
-              selected={this.state.date}
-              onChange={this.onChangeDate}
-            />
-          </div>
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Tạo" className="btn btn-primary" />
         </div>
       </form>
     </div>
