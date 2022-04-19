@@ -55,7 +55,11 @@ const App = () => {
     const params = useParams();
     return <SuaSanBay  {...{...props, match: {params}} } />
   }
-  
+
+  const Wrapper_SuaVe = (props) => {
+    const params = useParams();
+    return <SuaVe  {...{...props, match: {params}} } />
+  }
   return (
       <div>
        
@@ -78,7 +82,7 @@ const App = () => {
                     {/* Vé */}
                     <Route exact path="/Ve/BanVe"  element={<BanVe/>} />
                     <Route exact path="/Ve/DanhSachVe"  element={<DanhSachVe/>} />
-                    <Route exact path="/Ve/SuaVe/:id"  element={<SuaVe/>} />
+                    <Route exact path="/Ve/SuaVe/:id"  element={<Wrapper_SuaVe/>} />
                     <Route exact path="/Ve/DatVe"  element={<DatVe/>} />
                     {/* Sân bay */}
                     <Route exact path="/SanBay/TaoSanBay"  element={<TaoSanBay/>} />

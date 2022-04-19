@@ -10,20 +10,39 @@ export default class SuaVe extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDuration = this.onChangeDuration.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeMaChuyenBay =this.onChangeMaChuyenBay.bind(this);
+    this.onChangeTenHangKhach =this.onChangeTenHangKhach.bind(this);
+    this.onChangeCMND = this.onChangeCMND.bind(this);
+    this.onChangeSoDienThoai =this.onChangeSoDienThoai.bind(this);
+    this.onChangeMaHangGhe =this.onChangeMaHangGhe.bind(this);
+    this.onChangeNgayTao =this.onChangeNgayTao.bind(this);
+    this.onChangeThanhToan =this.onChangeThanhToan.bind(this);
+    this.onChangeGiaVe= this.onChangeGiaVe.bind(this);
+
     this.onSubmit = this.onSubmit.bind(this);
 
+        
+    // MaChuyenBay
+    // TenHangKhach
+    // CMND
+    // SoDienThoai
+    // MaHangGhe
+    // NgayTao
+    // ThanhToan
+    // GiaVe
+    // hangghes
     this.state = {
-      username: '',
-      description: '',
-      duration: 0,
-      date: new Date(),
-      users: []
+      MaChuyenBay : '',
+      TenHangKhach : '',
+      CMND: '',
+      SoDienThoai: '',
+      MaHangGhe: '',
+      NgayTao : new Date(),
+      ThanhToan : false,
+      GiaVe : 0,
+      hangghes: [],
+      MaHangGheObj : {}
     }
-    
   }
 
   componentDidMount() {
@@ -35,74 +54,104 @@ export default class SuaVe extends Component {
     //   // username : 'kiet'
     // }
     // // console.log(task);
-    axios.get('/exercises/find/'+this.props.match.params.id)
-    // axios.post('/exercises/find',task)
+    axios.get('/ves/find/'+this.props.match.params.id)
+    // axios.post('/ves/find',task)
       .then(response => {
         this.setState({
-          username: response.data.username,
-          description: response.data.discription,
-          duration: response.data.duration,
-          date: new Date(response.data.date)
+          MaChuyenBay: response.data.MaChuyenBay,
+          TenHangKhach: response.data.TenHangKhach,
+          CMND: response.data.CMND,
+          SoDienThoai: response.data.SoDienThoai,
+          MaHangGhe: response.data.MaHangGhe,
+          NgayTao: new Date(response.data.NgayTao),
+          ThanhToan: response.data.ThanhToan,
+          GiaVe: response.data.GiaVe
         })   
       })
       .catch(function (error) {
         console.log(error);
       })
 
-    axios.get('/users/')
+      axios.get('/hangghes/')
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
-            users: response.data.map(user => user.username),
+            hangghes: response.data,
+            MaHangGheObj : response.data[0],
+            // MaHangGhe : response.data[0]._id
           })
         }
       })
       .catch((error) => {
         console.log(error);
       })
-
   }
 
-  onChangeUsername(e) {
+  onChangeMaChuyenBay(e) {
     this.setState({
-      username: e.target.value
+      MaChuyenBay: e.target.value
     })
   }
-
-  onChangeDescription(e) {
+  onChangeTenHangKhach(e) {
     this.setState({
-      description: e.target.value
+      TenHangKhach: e.target.value
     })
   }
-
-  onChangeDuration(e) {
+  onChangeCMND(e) {
     this.setState({
-      duration: e.target.value
+      CMND: e.target.value
     })
   }
-
-  onChangeDate(date) {
+  onChangeSoDienThoai(e) {
     this.setState({
-      date: date
+      SoDienThoai: e.target.value
+    })
+  }
+  onChangeMaHangGhe(e) {
+    this.setState({
+      MaHangGhe: e.target.value
+    })
+  }
+  onChangeMaHangGheObj(e) {
+    this.setState({
+      MaHangGheObj: e.target.value
+    })
+  }
+  onChangeNgayTao(date) {
+    this.setState({
+      NgayTao: date
+    })
+  }
+  onChangeThanhToan(e) {
+    this.setState({
+      ThanhToan: e.target.value
+    })
+  }
+  onChangeGiaVe(e) {
+    this.setState({
+      GiaVe: e.target.value
     })
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const exercise = {
-      username: this.state.username,
-      description: this.state.description,
-      duration: this.state.duration,
-      date: this.state.date
+    
+    const ve = {
+      MaChuyenBay: this.state.MaChuyenBay,
+      TenHangKhach: this.state.TenHangKhach,
+      CMND: this.state.CMND,
+      SoDienThoai: this.state.SoDienThoai,
+      MaHangGhe: this.state.MaHangGhe,
+      NgayTao: this.state.NgayTao,
+      ThanhToan: this.state.ThanhToan,
+      GiaVe: this.state.GiaVe,
     }
 
-    console.log(exercise);
-
-    axios.post('/exercises/update/' + this.props.match.params.id, exercise)
+    axios.post('/ves/update/' + this.props.match.params.id, ve)
       .then(res => console.log(res.data));
 
-    window.location = '/';
+    window.location = '/Ve/DanhSachVe';
   }
 
   render() {
@@ -113,41 +162,59 @@ export default class SuaVe extends Component {
       <h3>Sửa vé</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
-          <label>Username: </label>
+          <label>Loại ghế: </label>
           <select ref="userInput"
               required
               className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
+              value={this.state.MaHangGhe}
+              onChange={this.onChangeMaHangGhe}>
               {
-                this.state.users.map(function(user) {
+                this.state.hangghes.map(function(user) {
                   return <option 
                     key={user}
-                    value={user}>{user}
+                    value={user._id}>{user.TenHangGhe}
                     </option>;
                 })
               }
           </select>
         </div>
         <div className="form-group"> 
-          <label>Description: </label>
+          <label>Tên hàng khách: </label>
           <input  type="text"
               required
               className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
+              value={this.state.TenHangKhach}
+              onChange={this.onChangeTenHangKhach}
+              />
+        </div>
+        <div className="form-group"> 
+          <label>CMND: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={this.state.CMND}
+              onChange={this.onChangeCMND}
+              />
+        </div>
+        <div className="form-group"> 
+          <label>Số điện thoại: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={this.state.SoDienThoai}
+              onChange={this.onChangeSoDienThoai}
               />
         </div>
         <div className="form-group">
-          <label>Duration (in minutes): </label>
+          <label>Giá vé: </label>
           <input 
               type="text" 
               className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
+              value={this.state.GiaVe}
+              onChange={this.onChangeGiaVe}
               />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Date: </label>
           <div>
             <DatePicker
@@ -155,10 +222,10 @@ export default class SuaVe extends Component {
               onChange={this.onChangeDate}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="form-group">
-          <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Sửa" className="btn btn-primary" />
         </div>
       </form>
     </div>

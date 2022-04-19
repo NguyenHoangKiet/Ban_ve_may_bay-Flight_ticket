@@ -3,20 +3,28 @@ import { Link} from 'react-router-dom';
 import axios from 'axios';
 import NavbarCom from '../navbar.component';
 
-const Exercise = props => (
+const Ve = props => (
   <tr>
-    <td>{props.exercise.username}</td>
-    <td>{props.exercise.discription}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0,10)}</td>
+    <td>{props.ve.MaChuyenBay}</td>
+    <td>{props.ve.TenHangKhach}</td>
+    <td>{props.ve.CMND}</td>
+    <td>{props.ve.SoDienThoai}</td>
+    <td>{props.ve.MaHangGhe}</td>
+    <td>{props.ve.NgayTao.substring(0,10)}</td>
+    <td>{ 
+      ((Boolean(props.ve.ThanhToan) == false ) && 'Chưa thanh toán' ) 
+      ||
+      ((Boolean(props.ve.ThanhToan) == true ) && 'Đã thanh toán' )  }
+     </td>
+    <td>{props.ve.GiaVe}</td>
     <td>
-      <Link to={"/edit/"+props.exercise._id}>
+      <Link to={"/Ve/SuaVe/"+props.ve._id}>
       {/* <Link to={"/edit/"}> */}
-        edit
+        Sửa
       </Link> 
       | 
-      <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>
-        delete
+      <a href="#" onClick={() => { props.deleteVe(props.ve._id) }}>
+        Xóa
       </a>
     </td>
   </tr>
@@ -26,33 +34,57 @@ export default class DanhSachVe extends Component {
   constructor(props) {
     super(props);
 
-    this.deleteExercise = this.deleteExercise.bind(this)
+    this.deleteVe = this.deleteVe.bind(this)
 
-    this.state = {exercises: []};
+    this.state = {ves: [], hangghes : [], hangghe : {}, TenHangGhe : []};
   }
 
   componentDidMount() {
-    axios.get('/exercises/')
+    axios.get('/ves/')
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ ves: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    
+    axios.get('/hangghes/')
+      .then(response => {
+        this.setState({ hangghes: response.data })
+        for (var i = 0 ;i<this.state.ves.length;i++){
+            this.state.TenHangGhe.push(
+              this.state.hangghes.find(hangghe => 
+                this.state.ves[i].MaHangGhe == hangghe._id
+              )
+            )
+        }
+        for (var i = 0 ;i<this.state.TenHangGhe.length;i++){
+          const new_ves = this.state.ves
+          new_ves[i].MaHangGhe = this.state.TenHangGhe[i].TenHangGhe;
+          this.setState({
+            ves : new_ves
+          })
+        }
+        console.log(this.state.TenHangGhe)
       })
       .catch((error) => {
         console.log(error);
       })
   }
 
-  deleteExercise(id) {
-    axios.delete('/exercises/delete/'+id)
+  deleteVe(id) {
+    axios.delete('/ves/delete/'+id)
       .then(response => { console.log(response.data)});
 
     this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
+      ves: this.state.ves.filter(el => el._id !== id)
     })
   }
 
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+  veList() {
+    return this.state.ves.map( (currentve) => {
+      return <Ve ve={currentve} deleteVe={this.deleteVe} 
+              key={currentve._id}></Ve>;
     })
   }
 
@@ -63,16 +95,19 @@ export default class DanhSachVe extends Component {
         <h3>Danh sách vé</h3>
         <table className="table">
           <thead className="thead-light">
-            <tr>
-              <th>Username</th>
-              <th>Description</th>
-              <th>Duration</th>
-              <th>Date</th>
-              <th>Actions</th>
+            <tr> 
+              <th>Mã chuyến bay</th>
+              <th>Tên khách hàng</th>
+              <th>CMND</th>
+              <th>Số điện thoại</th>
+              <th>Loại ghế</th>
+              <th>Ngày tạo</th>
+              <th>Thanh toán</th>
+              <th>Giá vé</th>
             </tr>
           </thead>
           <tbody>
-            { this.exerciseList() }
+            { this.veList() }
           </tbody>
         </table>
       </div>
