@@ -93,7 +93,7 @@ export default class DanhSachSanBayTrungGian extends Component {
 
   sanbayTrungGianList() {
     return this.state.sanbayTrungGians.map(currentsanbayTrungGian => {
-      return <SanbayTrungGian sanbayTrungGian={currentsanbayTrungGian} deletesanbay={this.deletesanbayTrungGian} key={currentsanbayTrungGian._id}/>;
+      return <SanbayTrungGian sanbayTrungGian={currentsanbayTrungGian} deletesanbayTrungGian={this.deletesanbayTrungGian} key={currentsanbayTrungGian._id}/>;
     })
   }
 

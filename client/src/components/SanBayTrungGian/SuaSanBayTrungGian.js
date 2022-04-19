@@ -6,62 +6,97 @@ import NavbarCom from '../navbar.component';
 import { useHistory, useParams } from 'react-router-dom'
 
 
-export default class SuaSanBay extends Component {
+export default class SuaSanBayTrungGian extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeTenSanBay = this.onChangeTenSanBay.bind(this);
-    this.onChangeQuocGia = this.onChangeQuocGia.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeMaChuyenBay = this.onChangeMaChuyenBay.bind(this);
+    this.onChangeMaSanBay = this.onChangeMaSanBay.bind(this);
+    this.onChangeThoiGianDung = this.onChangeThoiGianDung.bind(this);
+    this.onChangeGhiChu = this.onChangeGhiChu.bind(this);
 
+    this.onSubmit = this.onSubmit.bind(this);
+    // MaChuyenBay
+    // MaSanBay
+    // ThoiGianDung
+    // GhiChu
     this.state = {
-      TenSanBay: '',
-      QuocGia : '',
+      MaChuyenBay: '',
+      MaSanBay: '',
+      ThoiGianDung : '1',
+      GhiChu : '',
+      sanbays : []
     }
     
   }
 
   componentDidMount() {
-    axios.get('/sanbays/find/'+this.props.match.params.id)
+    axios.get('/sanbaytrunggians/find/'+this.props.match.params.id)
     // axios.post('/exercises/find',task)
       .then(response => {
-        this.setState({
-          TenSanBay : response.data.TenSanBay,
-          QuocGia : response.data.QuocGia
+        this.setState({ 
+          MaChuyenBay: response.data.MaChuyenBay,
+          MaSanBay: response.data.MaSanBay,
+          ThoiGianDung: response.data.ThoiGianDung,
+          GhiChu: response.data.GhiChu,
         })   
       })
       .catch(function (error) {
         console.log(error);
       })
 
+      axios.get('/sanbays/')
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            sanbays: response.data,
+            
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
-  onChangeTenSanBay(e) {
+  onChangeMaChuyenBay(e) {
     this.setState({
-      TenSanBay: e.target.value
+      MaChuyenBay: e.target.value
+    })
+  }
+  onChangeMaSanBay(e) {
+    this.setState({
+      MaSanBay: e.target.value
+    })
+  }
+  onChangeThoiGianDung(e) {
+    this.setState({
+      ThoiGianDung: e.target.value
+    })
+  }    
+  onChangeGhiChu(e) {
+    this.setState({
+      GhiChu: e.target.value
     })
   }
 
-  onChangeQuocGia(e) {
-    this.setState({
-      QuocGia: e.target.value
-    })
-  }
 
   onSubmit(e) {
     e.preventDefault();
 
     const sanbay = {
-      TenSanBay : this.state.TenSanBay,
-      QuocGia : this.state.QuocGia
+      MaChuyenBay : this.state.MaChuyenBay,
+      MaSanBay : this.state.MaSanBay,
+      ThoiGianDung : Number(this.state.ThoiGianDung),
+      GhiChu : this.state.GhiChu  
     }
 
     console.log(sanbay);
 
-    axios.post('/sanbays/update/' + this.props.match.params.id, sanbay)
+    axios.post('/sanbaytrunggians/update/' + this.props.match.params.id, sanbay)
       .then(res => console.log(res.data));
 
-    window.location = '/SanBay/DanhSachSanBay';
+    window.location = '/SanBayTrungGian/DanhSachSanBayTrungGian';
   }
 
   render() {
@@ -69,27 +104,52 @@ export default class SuaSanBay extends Component {
     return (
     <div className='container'>
       <NavbarCom></NavbarCom>
-      <h3>Sửa sân bay</h3>
+      <h3>Sửa sân bay trung gian</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
-          <label>Tên sân bay </label>
+          <label>Mã chuyến bay </label>
           <input  type="text"
               required
               className="form-control"
-              value={this.state.TenSanBay}
-              onChange={this.onChangeTenSanBay}
+              value={this.state.MaChuyenBay}
+              onChange={this.onChangeMaChuyenBay}
               />
         </div>
+        <div className="form-group"> 
+          <label>Tên sân bay: </label>
+          <select ref="userInput"
+              required
+              className="form-control"
+              value={this.state.MaSanBay}
+              onChange={this.onChangeMaSanBay}>
+              {
+                this.state.sanbays.map(function(user) {
+                  return <option 
+                    key={user}
+                    value={user._id}>{user.TenSanBay} ( {user.QuocGia} )
+                    </option>;
+                })
+              }
+          </select>
+        </div>
         <div className="form-group">
-          <label>Quốc gia : </label>
+          <label>Thời gian dừng : </label>
           <input 
               type="text" 
               className="form-control"
-              value={this.state.QuocGia}
-              onChange={this.onChangeQuocGia}
+              value={this.state.ThoiGianDung}
+              onChange={this.onChangeThoiGianDung}
               />
         </div>
-
+        <div className="form-group">
+          <label>Ghi chú : </label>
+          <input 
+              type="text" 
+              className="form-control"
+              value={this.state.GhiChu}
+              onChange={this.onChangeGhiChu}
+              />
+        </div>
         <div className="form-group">
           <input type="submit" value="Sửa" className="btn btn-primary" />
         </div>
