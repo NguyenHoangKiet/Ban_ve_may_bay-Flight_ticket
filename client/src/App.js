@@ -27,6 +27,10 @@ import Dangnhap from './components/Dangnhap/Dangnhap';
 import SuaSanBay from './components/SanBay/SuaSanBay';
 import TaoSanBay from './components/SanBay/TaoSanBay';
 import DanhSachSanBay from './components/SanBay/DanhSachSanBay';
+// Sân bay trung gian
+import SuaSanBayTrungGian from './components/SanBayTrungGian/SuaSanBayTrungGian';
+import TaoSanBayTrungGian from './components/SanBayTrungGian/TaoSanBayTrungGian';
+import DanhSachSanBayTrungGian from './components/SanBayTrungGian/DanhSachSanBayTrungGian';
 // Vé
 import BanVe from './components/Ve/BanVe';
 import DanhSachVe from './components/Ve/DanhSachVe';
@@ -54,6 +58,11 @@ const App = () => {
   const Wrapper_SuaSanBay = (props) => {
     const params = useParams();
     return <SuaSanBay  {...{...props, match: {params}} } />
+  }
+
+  const Wrapper_SuaSanBayTrungGian = (props) => {
+    const params = useParams();
+    return <SuaSanBayTrungGian  {...{...props, match: {params}} } />
   }
 
   const Wrapper_SuaVe = (props) => {
@@ -88,6 +97,10 @@ const App = () => {
                     <Route exact path="/SanBay/TaoSanBay"  element={<TaoSanBay/>} />
                     <Route exact path="/SanBay/DanhSachSanBay"  element={<DanhSachSanBay/>} />
                     <Route exact path="/SanBay/SuaSanBay/:id"  element={<Wrapper_SuaSanBay/>} />
+                     {/* Sân bay trung gian */}
+                     <Route exact path="/SanBayTrungGian/TaoSanBayTrungGian"  element={<TaoSanBayTrungGian/>} />
+                    <Route exact path="/SanBayTrungGian/DanhSachSanBayTrungGian"  element={<DanhSachSanBayTrungGian/>} />
+                    <Route exact path="/SanBayTrungGian/SuaSanBayTrungGian/:id"  element={<Wrapper_SuaSanBayTrungGian/>} />
                     {/* Hạng ghế */}
                     <Route exact path="/HangGhe/TaoHangGhe"     element={<TaoHangGhe/>} />
                     <Route exact path="/HangGhe/DanhSachHangGhe"  element={<DanhSachHangGhe/>} />

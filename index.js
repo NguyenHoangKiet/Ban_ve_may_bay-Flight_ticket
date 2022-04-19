@@ -33,12 +33,14 @@ const usersRouter = require('./routes/users');
 const hangghesRouter = require('./routes/hangghes');
 const sanbaysRouter = require('./routes/sanbays');
 const vesRouter = require('./routes/ves');
+const sanbaytrunggiansRouter = require('./routes/sanbaytrunggians');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/hangghes',hangghesRouter);
 app.use('/sanbays',sanbaysRouter);
 app.use('/ves',vesRouter);
+app.use('/sanbaytrunggians',sanbaytrunggiansRouter)
 
 if (process.env.NODE_ENV === 'production'){
   app.use(express.static('client/build'));

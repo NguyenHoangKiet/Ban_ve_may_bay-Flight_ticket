@@ -74,11 +74,29 @@ export default class DanhSachVe extends Component {
 
   deleteVe(id) {
     axios.delete('/ves/delete/'+id)
-      .then(response => { console.log(response.data)});
+      .then(response => { 
+        console.log(response.data)
+        this.setState({
+          ves: this.state.ves.filter(el => el._id !== id),
+          TenHangGhe : []
+        })
+        for (var i = 0 ;i<this.state.ves.length;i++){
+          this.state.TenHangGhe.push(
+            this.state.hangghes.find(hangghe => 
+              this.state.ves[i].MaHangGhe == hangghe._id
+            )
+          )
+      }
+      for (var i = 0 ;i<this.state.TenHangGhe.length;i++){
+        const new_ves = this.state.ves
+        new_ves[i].MaHangGhe = this.state.TenHangGhe[i].TenHangGhe;
+        this.setState({
+          ves : new_ves
+        })
+      }
+      });
 
-    this.setState({
-      ves: this.state.ves.filter(el => el._id !== id)
-    })
+   
   }
 
   veList() {
