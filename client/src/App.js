@@ -40,6 +40,10 @@ import SuaVe from './components/Ve/SuaVe';
 import DanhSachHangGhe from './components/HangGhe/DanhSachHangGhe'
 import SuaHangGhe from './components/HangGhe/SuaHangGhe'
 import TaoHangGhe from './components/HangGhe/TaoHangGhe'
+// Số lượng hạng ghế SoLuongHangGhe
+import DanhSachSoLuongHangGhe from './components/SoLuongHangGhe/DanhSachSoLuongHangGhe'
+import SuaSoLuongHangGhe from './components/SoLuongHangGhe/SuaSoLuongHangGhe'
+import TaoSoLuongHangGhe from './components/SoLuongHangGhe/TaoSoLuongHangGhe'
 // Chuyen bay
 import SuaChuyenBay from './components/ChuyenBay/SuaChuyenBay';
 import TaoChuyenBay from './components/ChuyenBay/TaoChuyenBay';
@@ -53,6 +57,11 @@ const App = () => {
   const Wrapper_SuaHangGhe = (props) => {
     const params = useParams();
     return <SuaHangGhe  {...{...props, match: {params}} } />
+  }
+
+  const Wrapper_SuaSoLuongHangGhe = (props) => {
+    const params = useParams();
+    return <SuaSoLuongHangGhe  {...{...props, match: {params}} } />
   }
 
   const Wrapper_SuaSanBay = (props) => {
@@ -105,6 +114,10 @@ const App = () => {
                     <Route exact path="/HangGhe/TaoHangGhe"     element={<TaoHangGhe/>} />
                     <Route exact path="/HangGhe/DanhSachHangGhe"  element={<DanhSachHangGhe/>} />
                     <Route exact path="/HangGhe/SuaHangGhe/:id"  element={<Wrapper_SuaHangGhe/>} />
+                    {/* Số lượng Hạng ghế */}
+                    <Route exact path="/SoLuongHangGhe/TaoSoLuongHangGhe"     element={<TaoSoLuongHangGhe/>} />
+                    <Route exact path="/SoLuongHangGhe/DanhSachSoLuongHangGhe"  element={<DanhSachSoLuongHangGhe/>} />
+                    <Route exact path="/SoLuongHangGhe/SuaSoLuongHangGhe/:id"  element={<Wrapper_SuaSoLuongHangGhe/>} />
                     {/* Quy định */}
                     <Route exact path="/ThayDoiQuyDinh"  element={<ThayDoiQuyDinh/>} />
 

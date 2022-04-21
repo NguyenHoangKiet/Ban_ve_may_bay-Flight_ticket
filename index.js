@@ -34,13 +34,15 @@ const hangghesRouter = require('./routes/hangghes');
 const sanbaysRouter = require('./routes/sanbays');
 const vesRouter = require('./routes/ves');
 const sanbaytrunggiansRouter = require('./routes/sanbaytrunggians');
+const soluonghangghesRouter = require('./routes/soluonghangghes');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/hangghes',hangghesRouter);
 app.use('/sanbays',sanbaysRouter);
 app.use('/ves',vesRouter);
-app.use('/sanbaytrunggians',sanbaytrunggiansRouter)
+app.use('/sanbaytrunggians',sanbaytrunggiansRouter);
+app.use('/soluonghangghes',soluonghangghesRouter);
 
 if (process.env.NODE_ENV === 'production'){
   app.use(express.static('client/build'));

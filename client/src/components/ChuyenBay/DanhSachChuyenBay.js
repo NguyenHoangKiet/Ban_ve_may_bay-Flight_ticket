@@ -2,20 +2,21 @@ import React, { Component } from 'react';
 import { Link} from 'react-router-dom';
 import axios from 'axios';
 import NavbarCom from '../navbar.component';
+import {Card,Button} from 'react-bootstrap'
 
-const Exercise = props => (
+const ChuyenBay = props => (
   <tr>
-    <td>{props.exercise.username}</td>
-    <td>{props.exercise.discription}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0,10)}</td>
+    <td>{props.chuyenbay.username}</td>
+    <td>{props.chuyenbay.discription}</td>
+    <td>{props.chuyenbay.duration}</td>
+    <td>{props.chuyenbay.date.substring(0,10)}</td>
     <td>
-      <Link to={"/edit/"+props.exercise._id}>
+      <Link to={"/edit/"+props.chuyenbay._id}>
       {/* <Link to={"/edit/"}> */}
         edit
       </Link> 
       | 
-      <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>
+      <a href="#" onClick={() => { props.deleteExercise(props.chuyenbay._id) }}>
         delete
       </a>
     </td>
@@ -28,13 +29,13 @@ export default class DanhSachChuyenBay extends Component {
 
     this.deleteExercise = this.deleteExercise.bind(this)
 
-    this.state = {exercises: []};
+    this.state = {chuyenbays: []};
   }
 
   componentDidMount() {
-    axios.get('/exercises/')
+    axios.get('/chuyenbays/')
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ chuyenbays: response.data })
       })
       .catch((error) => {
         console.log(error);
@@ -42,17 +43,17 @@ export default class DanhSachChuyenBay extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('/exercises/delete/'+id)
+    axios.delete('/chuyenbays/delete/'+id)
       .then(response => { console.log(response.data)});
 
     this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
+      chuyenbays: this.state.chuyenbays.filter(el => el._id !== id)
     })
   }
 
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+  chuyenbayList() {
+    return this.state.chuyenbays.map(currentchuyenbay => {
+      return <ChuyenBay chuyenbay={currentchuyenbay} deleteExercise={this.deleteExercise} key={currentchuyenbay._id}/>;
     })
   }
 
@@ -62,7 +63,7 @@ export default class DanhSachChuyenBay extends Component {
        <NavbarCom></NavbarCom>
         <h3>Danh sách chuyến bay</h3>
         <table className="table">
-          <thead className="thead-light">
+          {/* <thead className="thead-light">
             <tr>
               <th>Username</th>
               <th>Description</th>
@@ -70,9 +71,34 @@ export default class DanhSachChuyenBay extends Component {
               <th>Date</th>
               <th>Actions</th>
             </tr>
-          </thead>
+          </thead> */}
           <tbody>
-            { this.exerciseList() }
+            { 
+            // this.chuyenbayList() 
+            <div>
+            <Card>
+  <Card.Header as="h5">Featured</Card.Header>
+  <Card.Body>
+    <Card.Title>Special title treatment</Card.Title>
+    <Card.Text>
+      With supporting text below as a natural lead-in to additional content.
+    </Card.Text>
+    <Button variant="primary">Go somewhere</Button>
+  </Card.Body>
+</Card>
+
+<Card>
+  <Card.Header as="h5">Featured</Card.Header>
+  <Card.Body>
+    <Card.Title>Special title treatment</Card.Title>
+    <Card.Text>
+      With supporting text below as a natural lead-in to additional content.
+    </Card.Text>
+    <Button variant="primary">Go somewhere</Button>
+  </Card.Body>
+</Card>
+    </div>
+            }
           </tbody>
         </table>
       </div>

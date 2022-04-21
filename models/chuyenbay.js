@@ -2,18 +2,33 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create schema for todo
-const sanbaySchema = new Schema({
-  TenSanBay: {
+const chuyenbaySchema = new Schema({
+  MaSanBayDi: {
     type: String,
     required: true,
   },
-  QuocGia: {
-    type: Number,
+  MaSanBayDen: {
+    type: String,
     required: true,
   },
+  NgayGio : {
+    type : Date,
+    required : true
+  },
+  ThoiGianBay : {
+    type : Number,
+    required : true
+  },
+  MaSanTrungGian: {
+    type: String,
+    required: true,
+  },
+  MaSoluongHangGhe :{
+    type : String
+  }
 });
 
 // Create model for todo
-const sanbay = mongoose.model('sanbay',sanbaySchema);
+const chuyenbay = mongoose.model('chuyenbay',chuyenbaySchema);
 
-module.exports = sanbay;
+module.exports = chuyenbay;
